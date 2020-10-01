@@ -29,7 +29,7 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: ['test/*.ts', 'test/*.js'],
+        files: ['test/**/*.ts', 'test/**/*.js'],
 
         // list of files / patterns to exclude
         exclude: [],
