@@ -1,72 +1,26 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+# boilerplate-jasmine-typescript
 
+[![travis-ci](https://api.travis-ci.org/piecioshka/boilerplate-jasmine-typescript.svg?branch=master)](https://travis-ci.org/piecioshka/boilerplate-jasmine-typescript)
+[![coveralls](https://coveralls.io/repos/github/piecioshka/boilerplate-jasmine-typescript/badge.svg?branch=master)](https://coveralls.io/github/piecioshka/boilerplate-jasmine-typescript?branch=master)
 
-- [Overview](#overview)
-- [References](#references)
-  - [TypeScript](#typescript)
-  - [Webpack 4](#webpack-4)
-  - [Karma, Jasmine](#karma-jasmine)
-  - [All together](#all-together)
+🍴 Starter with Jasmine & TypeScript
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+## Features
 
-# Overview
+* :white_check_mark: Jasmine `v3.5.0`
+* :white_check_mark: TypeScript `v3.9.5`
 
-The tutorial explaining how to use this repo and it's directory structure and
-configuration files are in this
-[developerlife.com tutorial](http://developerlife.com/2019/07/06/starter-project-typescript-karma-jasmine-webpack/).
+## Unit tests
 
-<img src="https://developerlife.com/assets/ts-template-arch-diagram.svg"></img>
+```bash
+npm test
+```
 
-# References
+## Related
 
-## TypeScript
+* [boilerplate-mocha-typescript](https://github.com/piecioshka/boilerplate-mocha-typescript)
+* [boilerplate-jest-typescript](https://github.com/piecioshka/boilerplate-jest-typescript)
 
-TypeScript intro
+## License
 
-- https://www.youtube.com/watch?v=XShQO3BvOyM
-
-TypeScript and Webpack 4 intro
-
-- https://www.youtube.com/watch?v=8TiZdePyduI
-- https://github.com/GeekLaunch/webpack-tutorial
-- https://github.com/TypeStrong/ts-loader
-
-## Webpack 4
-
-Webpack 4
-
-- https://wanago.io/2018/07/16/webpack-4-course-part-one-entry-output-and-es6-modules/
-
-Webpack configuration
-
-- https://webpack.js.org/configuration/devtool/
-- https://medium.com/@rajaraodv/webpack-the-confusing-parts-58712f8fcad9
-
-Webpack dev server configuration
-
-- https://github.com/webpack/webpack-dev-server/issues/720#issuecomment-268470989
-- https://webpack.js.org/guides/development/#using-webpack-dev-server
-
-## Karma, Jasmine
-
-Karma, Jasmine
-
-- http://www.bradoncode.com/blog/2015/02/27/karma-tutorial/
-- https://stackoverflow.com/a/17327465/2085356
-
-## All together
-
-Karma, Jasmine, and Webpack setup
-
-- https://mike-ward.net/2015/09/07/tips-on-setting-up-karma-testing-with-webpack/
-
-TypeScript migrate from typings to npm @types
-
-- http://codereform.com/blog/post/migrating-from-typings-to-npm-types/
-
-TypeScript, Webpack, Jasmine, and Karma
-
-- https://templecoding.com/blog/2016/02/02/how-to-setup-testing-using-typescript-mocha-chai-sinon-karma-and-webpack
-- https://github.com/thitemple/TypescriptMochaWebpackDemo
+[The MIT License](http://piecioshka.mit-license.org) @ 2018
