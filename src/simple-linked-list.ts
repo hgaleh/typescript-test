@@ -93,4 +93,15 @@ export class SimpleLinkedList<T> {
         }
         return arr;
     }
+
+    reverse(): void {
+        const newLinkedList = new SimpleLinkedList([]);
+        let currentNode = this.first.next;
+        while(currentNode !== this.last) {
+            newLinkedList.addFirst(currentNode.value);
+            currentNode = currentNode.next;
+        }
+        this.first = newLinkedList.first;
+        this.last = newLinkedList.last;
+    }
 }

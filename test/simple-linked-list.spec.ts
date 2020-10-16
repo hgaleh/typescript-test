@@ -97,4 +97,22 @@ describe('test simple linked list', () => {
         const indexOf20 = linkedList.indexOf(20);
         expect(indexOf20).toBe(-1);
     });
+
+    it('reverse', () => {
+        const linkedList = new SimpleLinkedList([12, 13, 23]);
+        linkedList.reverse();
+        expect(linkedList.toArray()).toEqual([23, 13, 12]);
+    });
+
+    it('reverse empty list', () => {
+        const linkedList = new SimpleLinkedList([]);
+        linkedList.reverse();
+        expect(linkedList.toArray()).toEqual([]);
+    });
+
+    it('reverse one element list', () => {
+        const linkedList = new SimpleLinkedList([2]);
+        linkedList.reverse();
+        expect(linkedList.toArray()).toEqual([2]);
+    });
 });
