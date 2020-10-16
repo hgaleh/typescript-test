@@ -1,5 +1,11 @@
-import { threadId } from 'worker_threads';
-import { SimpleNode } from './simple-node';
+class SimpleNode<T> {
+    next: SimpleNode<T>;
+    value: T;
+
+    constructor(val?: T) {
+        this.value = val;
+    }
+}
 
 export class SimpleLinkedList<T> {
     private first: SimpleNode<T>;
