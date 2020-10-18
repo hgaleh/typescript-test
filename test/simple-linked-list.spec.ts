@@ -115,4 +115,40 @@ describe('test simple linked list', () => {
         linkedList.reverse();
         expect(linkedList.toArray()).toEqual([2]);
     });
+
+    it('last kth', () => {
+        const linledList = new SimpleLinkedList([10, 20, 30, 40, 50]);
+        const res = linledList.lastKth(1);
+        expect(res).toBe(50);
+        expect(linledList.lastKth(5)).toBe(10);
+    });
+
+    it('print middle odd list length', () => {
+        const linkedList = new SimpleLinkedList([11, 12, 13, 14, 15]);
+        const res = linkedList.getMiddle();
+        expect(res).toBe(13);
+    });
+
+    it('print middle even list length', () => {
+        const linkedList = new SimpleLinkedList([11, 12, 13, 14, 15, 16]);
+        const res = linkedList.getMiddle();
+        expect(res).toEqual([13, 14]);
+    });
+
+    it('print middle single length', () => {
+        const linkedList = new SimpleLinkedList([11]);
+        const res = linkedList.getMiddle();
+        expect(res).toEqual(11);
+    });
+
+    it('print middle 2 length', () => {
+        const linkedList = new SimpleLinkedList([11, 12]);
+        const res = linkedList.getMiddle();
+        expect(res).toEqual([11, 12]);
+    });
+
+    it('print middle empty length', () => {
+        const linkedList = new SimpleLinkedList([]);
+        expect(linkedList.getMiddle).toThrow();
+    });
 });
