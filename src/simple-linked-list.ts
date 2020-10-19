@@ -1,5 +1,3 @@
-import { exception } from "console";
-
 class SimpleNode<T> {
     next: SimpleNode<T>;
     value: T;
