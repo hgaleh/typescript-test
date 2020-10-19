@@ -1,4 +1,4 @@
-class SimpleNode<T> {
+export class SimpleNode<T> {
     next: SimpleNode<T>;
     value: T;
 
