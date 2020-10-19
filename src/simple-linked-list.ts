@@ -1,11 +1,4 @@
-export class SimpleNode<T> {
-    next: SimpleNode<T>;
-    value: T;
-
-    constructor(val?: T) {
-        this.value = val;
-    }
-}
+import { SimpleNode } from "./simple-node";
 
 export class SimpleLinkedList<T> {
     private first: SimpleNode<T>;
