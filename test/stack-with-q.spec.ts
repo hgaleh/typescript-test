@@ -63,7 +63,7 @@ describe('implement stack with queue', () => {
         expect(s.isEmpty()).toBeTrue();
     });
 
-    it('isEmpty', () => {
+    it('isEmpty emptied with pop', () => {
         const s = new StackWithQueue();
         s.push(10);
         s.push(11);
