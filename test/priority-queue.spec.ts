@@ -11,9 +11,7 @@ class PriorityQueue {
         this.q.push(val);
         for(let i = this.q.length - 1; i >= 0; i--) {
             if (this.q[i - 1] < this.q[i]) {
-                const tmp = this.q[i - 1];
-                this.q[i - 1] = this.q[i];
-                this.q[i] = tmp;
+                [this.q[i - 1], this.q[i]] = [this.q[i], this.q[i - 1]];
             }
         }
     }
