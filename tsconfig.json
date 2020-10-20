@@ -9,6 +9,7 @@
         "removeComments": false,
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
-        "allowJs": true
+        "allowJs": true,
+        "downlevelIteration": true
     }
 }
