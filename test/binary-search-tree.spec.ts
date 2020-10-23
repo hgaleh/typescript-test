@@ -77,4 +77,27 @@ describe('binary tree', () => {
 
         expect(tree.toArray()).toEqual([]);
     });
+
+    it('remove something that does not exist', () => {
+        const tree = new BinarySearchTree(2);
+        tree.remove(8);
+
+        expect(tree.toArray()).toEqual([2]);
+    });
+
+    it('remove all tree and then add new elements', () => {
+        const tree = new BinarySearchTree(2);
+        tree.remove(8);
+        tree.remove(5);
+        tree.remove(9);
+
+        tree.remove(9);
+        tree.remove(8);
+        tree.remove(5);
+        tree.remove(2);
+
+        tree.add(1);
+
+        expect(tree.toArray()).toEqual([1]);
+    });
 });
