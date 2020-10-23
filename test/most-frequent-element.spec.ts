@@ -6,4 +6,16 @@ describe('find most frequent in an integer list', () => {
         const actual = getMostFrequentElement(inputArray);
         expect(actual).toBe(2);
     });
+
+    it('there are 1 elements and one element has maximum occurance', () => {
+        const inputArray = [5]
+        const actual = getMostFrequentElement(inputArray);
+        expect(actual).toBe(5);
+    });
+
+    it('there are 0 elements', () => {
+        const inputArray: number[] = []
+        const actual = getMostFrequentElement(inputArray);
+        expect(actual).toBe(undefined);
+    });
 });
