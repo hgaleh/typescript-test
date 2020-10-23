@@ -42,8 +42,4 @@ describe('use chaining to handle collisiona in hashmaps', () => {
         hash.remove(2);
         expect(hash.get(2)).toBeUndefined();
     });
-
-    it('put', () => {
-
-    });
 });
