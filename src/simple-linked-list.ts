@@ -69,7 +69,7 @@ export class SimpleLinkedList<T> {
     indexOf(val: T): number {
         let counter = 0;
         let found: number;
-        this.forEach(x => {
+        this.forEachPrivate(x => {
             if ((x.value === val) && (found === undefined)) {
                 found = counter;
             }
@@ -80,7 +80,7 @@ export class SimpleLinkedList<T> {
 
     reverse(): void {
         const newLinkedList = new SimpleLinkedList<T>();
-        this.forEach(x => {
+        this.forEachPrivate(x => {
             newLinkedList.addFirst(x.value);
         });
         this.first = newLinkedList.first;
@@ -92,7 +92,7 @@ export class SimpleLinkedList<T> {
         let counter = 0;
         let found: T;
 
-        this.forEach(x => {
+        this.forEachPrivate(x => {
             if (counter === index) {
                 found = x.value;
             }
@@ -137,13 +137,13 @@ export class SimpleLinkedList<T> {
 
     toArray(): T[] {
         const arr: T[] = [];
-        this.forEach(x => {
+        this.forEachPrivate(x => {
             arr.push(x.value);
         });
         return arr;
     }
 
-    private forEach(fn: (nd: SimpleNode<T>) => void) {
+    private forEachPrivate(fn: (nd: SimpleNode<T>) => void) {
         if (this.isEmpty()) return;
         let currentNode = this.first;
         while(currentNode !== this.last) {
@@ -151,6 +151,10 @@ export class SimpleLinkedList<T> {
             currentNode = currentNode.next;
         }
         fn(currentNode);
+    }
+
+    forEach(fn: (val: T) => void) {
+        this.forEachPrivate(node => fn(node.value));
     }
 
     find(fn: (nd: SimpleNode<T>) => boolean): SimpleNode<T> {

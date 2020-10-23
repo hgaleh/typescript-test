@@ -2,23 +2,23 @@ import { SimpleLinkedList } from "./simple-linked-list";
 
 const hashtableSize = 10;
 
-interface Entry {
-    key: number;
-    value: string
+interface Entry<K, V> {
+    key: K;
+    value: V
 }
 
-export class LinkedListHash {
-    private storrage = new Array<SimpleLinkedList<Entry>>(hashtableSize);
+export class LinkedListHash<K, V> {
+    private entries = new Array<SimpleLinkedList<Entry<K, V>>>(hashtableSize);
 
     constructor() {
         for(let i = 0; i < hashtableSize; i++) {
-            this.storrage[i] = new SimpleLinkedList<Entry>();
+            this.entries[i] = new SimpleLinkedList<Entry<K, V>>();
         }
     }
 
-    put(key: number, value: string): void {
+    put(key: K, value: V): void {
         const searchRes = this.getByKey(key);
-        const ll = this.getLinkedList(key);
+        const ll = this.getBucket(key);
         if (searchRes) {
             searchRes.value = value;
         } else {
@@ -26,27 +26,33 @@ export class LinkedListHash {
         }
     }
 
-    get(key: number): string {
+    get(key: K): V {
         const searchRes = this.getByKey(key);
         return searchRes && searchRes.value;
     }
 
-    remove(key: number): void {
-        const ll = this.getLinkedList(key);
+    remove(key: K): void {
+        const ll = this.getBucket(key);
         ll.removeIf(x => x.key === key);
     }
 
-    private hashFunction(location: number): number {
-        return location % hashtableSize;
+    forEach(fn: (value: Entry<K, V>) => void) {
+        this.entries.forEach(entry => {
+            entry.forEach(node => fn(node));
+        });
     }
 
-    private getByKey(key: number): Entry {
-        const ll = this.getLinkedList(key);
+    private hashFunction(location: K): number {
+        return +location % hashtableSize;
+    }
+
+    private getByKey(key: K): Entry<K, V> {
+        const ll = this.getBucket(key);
         const res =  ll.find(nod => nod.value.key === key);
         return res ? res.value : undefined;
     }
 
-    private getLinkedList(key: number): SimpleLinkedList<Entry> {
-        return this.storrage[this.hashFunction(key)];
+    private getBucket(key: K): SimpleLinkedList<Entry<K, V>> {
+        return this.entries[this.hashFunction(key)];
     }
 }
