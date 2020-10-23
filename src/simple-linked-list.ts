@@ -3,139 +3,155 @@ import { SimpleNode } from "./simple-node";
 export class SimpleLinkedList<T> {
     private first: SimpleNode<T>;
     private last: SimpleNode<T>;
-    private length: number;
+    private length: number = 0;
 
-    constructor(inputArray: T[]) {
-        this.first = new SimpleNode<T>();
-        this.last = new SimpleNode<T>();
-        this.first.next = this.last;
-        this.length = 0;
-
-        if (inputArray && (inputArray.length > 0)) {
-            this.length = inputArray.length;
-            const nodes = inputArray.map(ndeVal => new SimpleNode(ndeVal));
-            this.first.next = nodes[0];
-            for(let i = 0; i < nodes.length - 1; i++) {
-                nodes[i].next = nodes[i + 1];
-            }
-            nodes[nodes.length - 1].next = this.last;
+    constructor(arrayInput?: T[]) {
+        if (arrayInput) {
+            arrayInput.forEach(val => {
+                this.addLast(val);
+            });
         }
     }
 
     addFirst(val: T): void {
-        const nde = new SimpleNode<T>(val);
-        nde.next = this.first.next;
+        const newNode = new SimpleNode(val);
+        if( this.isEmpty() ) {
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            newNode.next = this.first;
+            this.first = newNode;
+        }
         this.length++;
-        this.first.next = nde;
     }
 
     addLast(val: T): void {
+        if (this.isEmpty()) {
+            return this.addFirst(val);
+        }
+
         const nde = new SimpleNode<T>(val);
-        nde.next = this.last;
-        const beforeLastNode = this.getBeforeLastNode();
-        beforeLastNode.next = nde;
+        this.last.next = nde;
+        this.last = nde;
         this.length++;
     }
 
     deleteFirst(): void {
-        if ( this.first.next !== this.last ) {
-            this.first.next = this.first.next.next;
+        if (!this.isEmpty()) {
+            this.first = this.first.next;
             this.length--;
         }
     }
 
     deleteLast(): void {
-        let beforeLast = this.getBeforeLastNode();
-        let beforeBeforeLAst = this.getBeforeNode(beforeLast);
-        this.length--;
-        beforeBeforeLAst.next = this.last;
+        if (!this.isEmpty()) {
+            const beforeLast = this.find(x => x.next === this.last);
+            beforeLast.next = undefined;
+            this.last = beforeLast;
+            this.length--;
+        }
     }
 
     contains(val: T): boolean {
-        return (this.indexOf(val) > -1);
+        return this.find(x => x.value === val) !== null;
     }
 
     indexOf(val: T): number {
-        let currentVal = this.first.next;
-        let index = 0;
-        while(currentVal !== this.last) {
-            if (currentVal.value === val) {
-                return index;
+        let counter = 0;
+        let found: number;
+        this.forEach(x => {
+            if ((x.value === val) && (found === undefined)) {
+                found = counter;
             }
-            index++;
-            currentVal = currentVal.next;
-        }
-        return -1;
-    }
-
-    private getBeforeLastNode(): SimpleNode<T> {
-        return this.getBeforeNode(this.last);
-    }
-
-    private getBeforeNode(nde: SimpleNode<T>): SimpleNode<T> {
-        let currentNode = this.first;
-        if (nde === this.first) {
-            return this.first;
-        }
-
-        while (currentNode.next !== nde) {
-            currentNode = currentNode.next;
-        }
-        return currentNode;
-    }
-
-    toArray(): T[] {
-        const arr: T[] = [];
-        let currNode = this.first.next;
-        while(currNode !== this.last) {
-            arr.push(currNode.value);
-            currNode = currNode.next;
-        }
-        return arr;
+            counter++;
+        });
+        return (found !== undefined) ? found : -1;
     }
 
     reverse(): void {
-        const newLinkedList = new SimpleLinkedList([]);
-        let currentNode = this.first.next;
-        while(currentNode !== this.last) {
-            newLinkedList.addFirst(currentNode.value);
-            currentNode = currentNode.next;
-        }
+        const newLinkedList = new SimpleLinkedList<T>();
+        this.forEach(x => {
+            newLinkedList.addFirst(x.value);
+        });
         this.first = newLinkedList.first;
         this.last = newLinkedList.last;
     }
 
     lastKth(k: number): T {
-        if ( k > this.length) {
-            throw new Error(`k is larger than length(${this.length})`)
-        }
-        let currentVal = this.first.next;
         let index = this.length - k;
-        for (let i = 0; i < index; i++) {
-            currentVal = currentVal.next;
+        let counter = 0;
+        let found: T;
+
+        this.forEach(x => {
+            if (counter === index) {
+                found = x.value;
+            }
+            counter++;
+        });
+
+        if (found !== undefined) {
+            return found;
         }
-        return currentVal.value;
+
+        throw new Error(`k is larger than length(${this.length})`);
     }
 
     getMiddle(): T | T[] {
         let iter1 = this.first;
         let iter2 = this.first;
-        if (iter1.next === this.last) {
+        if (this.isEmpty()) {
             throw new Error('invalid size');
         }
         while (true) {
-            iter1 = iter1.next;
-            iter2 = iter2.next;
-            if (iter2.next === this.last) {
+            if (iter2 === this.last) {
                 return iter1.value;
             }
+
             iter2 = iter2.next;
-            if (iter2.next === this.last) {
+
+            if (iter2 === this.last) {
                 const val1 = iter1.value;
                 iter1 = iter1.next;
                 const val2 = iter1.value;
                 return [val1, val2];
             }
+
+            iter1 = iter1.next;
+            iter2 = iter2.next;
         }
+    }
+
+    isEmpty(): boolean {
+        return this.first === undefined;
+    }
+
+    toArray(): T[] {
+        const arr: T[] = [];
+        this.forEach(x => {
+            arr.push(x.value);
+        });
+        return arr;
+    }
+
+    private forEach(fn: (nd: SimpleNode<T>) => void) {
+        if (this.isEmpty()) return;
+        let currentNode = this.first;
+        while(currentNode !== this.last) {
+            fn(currentNode);
+            currentNode = currentNode.next;
+        }
+        fn(currentNode);
+    }
+
+    private find(fn: (nd: SimpleNode<T>) => boolean): SimpleNode<T> {
+        if (this.isEmpty()) return null;
+        let currentNode = this.first;
+        while(currentNode.next !== undefined) {
+            if(fn(currentNode)) {
+                return currentNode;
+            }
+            currentNode = currentNode.next;
+        }
+        return null;
     }
 }

@@ -70,7 +70,7 @@ describe('test simple linked list', () => {
         expect(isFalse).toBeFalse();
     });
 
-    it('containt can find element with specific value in empty array', () => {
+    it('contains can find element with specific value in empty array', () => {
         const linkedList = new SimpleLinkedList([]);
         const isFalse1 = linkedList.contains(2);
         const isFalse2 = linkedList.contains(45);
