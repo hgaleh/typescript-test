@@ -128,4 +128,11 @@ describe('binary tree', () => {
 
         expect(eq).toBeTrue();
     });
+
+    it('is valid tree', () => {
+        const tree = new BinarySearchTree(2);
+        tree.add(1);
+        tree.add(5);
+        expect(tree.isValid()).toBeTrue();
+    });
 });

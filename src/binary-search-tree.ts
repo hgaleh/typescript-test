@@ -116,6 +116,26 @@ export class BinarySearchTree {
             this.right.forEach(val => fn(val));
         }
     }
+
+    isValid() {
+        return this.isValidPrivate(Number.MIN_VALUE, Number.MAX_VALUE);
+    }
+
+    protected isValidPrivate(lower: number, upper: number): boolean {
+        const thisIsValid = (this.value > lower) && (this.value < upper);
+        let leftIsValid = true;
+        let rightIsValid = true;
+
+        if (this.left) {
+            leftIsValid = this.left.isValidPrivate(lower, this.value);
+        }
+
+        if(this.right) {
+            rightIsValid = this.right.isValidPrivate(this.value, upper);
+        }
+
+        return thisIsValid && leftIsValid && rightIsValid;
+    }
 }
 
 class Child extends BinarySearchTree {
