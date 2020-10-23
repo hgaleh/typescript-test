@@ -135,4 +135,28 @@ describe('binary tree', () => {
         tree.add(5);
         expect(tree.isValid()).toBeTrue();
     });
+
+    it('is valid tree', () => {
+        const tree = new BinarySearchTree(2);
+        tree.add(65);
+        tree.add(20);
+        tree.add(1);
+        tree.add(57);
+        tree.add(5);
+        tree.add(52);
+        tree.add(12);
+        tree.add(47);
+        tree.add(13);
+        tree.add(8);
+        tree.add(7);
+        tree.add(15);
+        tree.add(10);
+        tree.add(14);
+        tree.add(24);
+        tree.add(25);
+
+        const nodes = tree.nodesWithDistance(4);
+
+        expect(nodes).toEqual([12, 52]);
+    });
 });

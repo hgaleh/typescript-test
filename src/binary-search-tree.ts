@@ -121,6 +121,22 @@ export class BinarySearchTree {
         return this.isValidPrivate(Number.MIN_VALUE, Number.MAX_VALUE);
     }
 
+    nodesWithDistance(k: number): number[] {
+        if (k === 0) {
+            return [this.value];
+        } else {
+            let childNodes: number[] = [];
+            if (this.left) {
+                childNodes = [...childNodes, ...this.left.nodesWithDistance(k - 1)];
+            }
+
+            if (this.right) {
+                childNodes = [...childNodes, ...this.right.nodesWithDistance(k - 1)];
+            }
+            return childNodes;
+        }
+    }
+
     protected isValidPrivate(lower: number, upper: number): boolean {
         const thisIsValid = (this.value > lower) && (this.value < upper);
         let leftIsValid = true;
