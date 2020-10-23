@@ -6,19 +6,24 @@ export class BinarySearchTree {
     constructor(private value: number) {}
 
     add(val: number): void {
-        if (val > this.value) {
-            if (this.right) {
-                this.right.add(val);
-            } else {
-                this.right = new Child(val);
+        if (this.value) {
+            if (val > this.value) {
+                this.right = this.addToWing(this.right, val);
+            } else if(val < this.value) {
+                this.left = this.addToWing(this.left, val);
             }
-        } else if(val < this.value) {
-            if(this.left) {
-                this.left.add(val);
-            } else {
-                this.left = new Child(val);
-            }
+        } else {
+            this.value = val;
         }
+    }
+
+    private addToWing(branch: Child, val: number): Child {
+        if (branch) {
+            branch.add(val);
+        } else {
+            branch = new Child(val);
+        }
+        return branch;
     }
 
     find(val: number): boolean {
@@ -33,51 +38,47 @@ export class BinarySearchTree {
 
     remove(val: number): void {
         if(val > this.value) {
-            if (this.right) {
-                if (this.right.value === val) {
-                    const rightChildren = this.right.childrenArray();
-                    if (rightChildren && rightChildren.length > 0) {
-                        const midleElement = rightChildren.length / 2;
-                        this.right = new BinarySearchTree(rightChildren.splice(midleElement, 1)[0]);
-                        rightChildren.forEach(child => {
-                            this.right.add(child);
-                        });
-                    } else {
-                        this.right = undefined;
-                    }
-                } else {
-                    this.right.remove(val);
-                }
-            } else {
-                return;
-            }
+            this.right = this.removeFromBranch(this.right, val);
         } else if ( val < this.value) {
-            if (this.left) {
-                if (this.left.value === val) {
-                    const leftChildren = this.left.childrenArray();
-                    if (leftChildren && leftChildren.length > 0) {
-                        const midleElement = leftChildren.length / 2;
-                        this.left = new BinarySearchTree(leftChildren.splice(midleElement, 1)[0]);
-                        leftChildren.forEach(child => {
-                            this.left.add(child);
-                        });
-                    } else {
-                        this.left = undefined;
-                    }
-                } else {
-                    this.left.remove(val);
-                }
+            this.left = this.removeFromBranch(this.left, val);
+        } else {
+            const newMe = this.removeFromBranch(this, val);
+            if (newMe) {
+                this.value = newMe.value;
+                this.right = newMe.right;
+                this.left = newMe.left;
             } else {
-                return;
+                this.value = undefined;
             }
         }
+    }
+
+    private removeFromBranch(branch: Child, val: number): Child {
+        if (branch) {
+            if (branch.value === val) {
+                const children = branch.childrenArray();
+                if (children && children.length > 0) {
+                    const midleElement = Math.floor(children.length / 2);
+                    branch = new Child(children.splice(midleElement, 1)[0]);
+                    children.forEach(child => {
+                        branch.add(child);
+                    });
+                } else {
+                    branch = undefined;
+                }
+            } else {
+                branch.remove(val);
+            }
+        }
+        return branch;
     }
 
     toArray(): number[] {
         const leftHand = this.left ? this.left.toArray() : [];
         const rightHand = this.right ? this.right.toArray() : [];
+        const thisArray = this.value ? [this.value] : [];
         return leftHand
-            .concat([this.value])
+            .concat(thisArray)
             .concat(rightHand);
     }
 
