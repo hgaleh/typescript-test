@@ -37,6 +37,11 @@ export class SimpleLinkedList<T> {
     }
 
     deleteFirst(): void {
+        if (this.first === this.last) {
+            this.first = this.last = undefined;
+            return;
+        }
+
         if (!this.isEmpty()) {
             this.first = this.first.next;
             this.length--;
@@ -44,6 +49,11 @@ export class SimpleLinkedList<T> {
     }
 
     deleteLast(): void {
+        if (this.first === this.last) {
+            this.first = this.last = undefined;
+            return;
+        }
+
         if (!this.isEmpty()) {
             const beforeLast = this.find(x => x.next === this.last);
             beforeLast.next = undefined;
@@ -143,7 +153,7 @@ export class SimpleLinkedList<T> {
         fn(currentNode);
     }
 
-    private find(fn: (nd: SimpleNode<T>) => boolean): SimpleNode<T> {
+    find(fn: (nd: SimpleNode<T>) => boolean): SimpleNode<T> {
         if (this.isEmpty()) return null;
         let currentNode = this.first;
         while(currentNode.next !== undefined) {
@@ -152,6 +162,26 @@ export class SimpleLinkedList<T> {
             }
             currentNode = currentNode.next;
         }
+
+        if(fn(currentNode)) {
+            return currentNode;
+        }
+
         return null;
+    }
+
+    removeIf(fn: (val: T) => boolean): void {
+        const node = this.find(x => fn(x.value));
+
+        if (node === this.last) {
+            return this.deleteLast();
+        }
+
+        if (node === this.first) {
+            return this.deleteFirst();
+        }
+
+        const beforeNode = this.find(nod => nod.next === node);
+        beforeNode.next = beforeNode.next.next;
     }
 }

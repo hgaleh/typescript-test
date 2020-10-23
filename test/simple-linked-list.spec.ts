@@ -151,4 +151,74 @@ describe('test simple linked list', () => {
         const linkedList = new SimpleLinkedList([]);
         expect(linkedList.getMiddle).toThrow();
     });
+
+    it('find when only one element presents', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi']);
+        const res = linkedList.find(x => x.value.length === 5);
+        expect(res.value).toBe('taghi')
+    });
+
+    it('delete last when only one element exists', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi']);
+        linkedList.deleteLast();
+        expect(linkedList.isEmpty()).toBeTrue();
+    });
+
+    it('when only one element exists and removeFirt, isEmpty is true', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi']);
+        linkedList.deleteFirst();
+        expect(linkedList.isEmpty()).toBeTrue();
+    });
+
+    it('removeIf when removes one element', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi']);
+        linkedList.removeIf(x => x === 'taghi');
+        expect(linkedList.isEmpty()).toBeTrue();
+    });
+
+    it('removeIf when removes last element', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi', 'ahmad']);
+        linkedList.removeIf(x => x === 'ahmad');
+        expect(linkedList.isEmpty()).toBeFalse();
+        expect(linkedList.toArray()).toEqual(['taghi']);
+    });
+
+    it('removeIf when removes first element', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi', 'ahmad']);
+        linkedList.removeIf(x => x === 'taghi');
+        expect(linkedList.isEmpty()).toBeFalse();
+        expect(linkedList.toArray()).toEqual(['ahmad']);
+    });
+
+    it('removeIf when removes middle element', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi', 'mehdi', 'ahmad']);
+        linkedList.removeIf(x => x === 'mehdi');
+        expect(linkedList.isEmpty()).toBeFalse();
+        expect(linkedList.toArray()).toEqual(['taghi', 'ahmad']);
+    });
+
+    it('removeIF middle then first', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi', 'mehdi', 'ahmad']);
+        linkedList.removeIf(x => x === 'mehdi');
+        linkedList.removeIf(x => x === 'taghi');
+        expect(linkedList.isEmpty()).toBeFalse();
+        expect(linkedList.toArray()).toEqual(['ahmad']);
+    });
+
+    it('removeIF middle then first', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi', 'mehdi', 'ahmad']);
+        linkedList.removeIf(x => x === 'mehdi');
+        linkedList.removeIf(x => x === 'ahmad');
+        expect(linkedList.isEmpty()).toBeFalse();
+        expect(linkedList.toArray()).toEqual(['taghi']);
+    });
+
+    it('removeIF all', () => {
+        const linkedList = new SimpleLinkedList<string>(['taghi', 'mehdi', 'ahmad']);
+        linkedList.removeIf(x => x === 'mehdi');
+        linkedList.removeIf(x => x === 'ahmad');
+        linkedList.removeIf(x => x === 'taghi');
+        expect(linkedList.isEmpty()).toBeTrue();
+        expect(linkedList.toArray()).toEqual([]);
+    });
 });
