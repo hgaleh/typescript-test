@@ -88,6 +88,34 @@ export class BinarySearchTree {
         return leftHand
             .concat(rightHand);
     }
+
+    equals(other: BinarySearchTree): boolean {
+        const equalValues = this.value == other.value;
+        const hasLeft = (!!this.left && !!other.left) || (!this.left && !other.left);
+        const hasRight = (!!this.right && !!other.right) || (!this.right && !other.right);
+        let equalLeft = true;
+        let equalRight = true;
+
+        if (!!this.left && !!other.left) {
+            equalLeft = this.left.equals(other.left);
+        }
+
+        if (!!this.right && !!other.right) {
+            equalRight = this.right.equals(other.right);
+        }
+
+        return equalValues && hasLeft && hasRight && equalLeft && equalRight;
+    }
+
+    private forEach(fn: (val: number) => void): void {
+        fn(this.value);
+        if (this.left) {
+            this.left.forEach(val => fn(val));
+        }
+        if(this.right) {
+            this.right.forEach(val => fn(val));
+        }
+    }
 }
 
 class Child extends BinarySearchTree {

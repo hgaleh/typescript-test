@@ -100,4 +100,32 @@ describe('binary tree', () => {
 
         expect(tree.toArray()).toEqual([1]);
     });
+
+    it('not equal trees', () => {
+        const tree = new BinarySearchTree(2);
+        tree.add(1);
+        tree.add(5);
+
+        const tree2 = new BinarySearchTree(2);
+        tree2.add(6);
+        tree2.add(5);
+
+        const eq = tree.equals(tree2);
+
+        expect(eq).toBeFalse();
+    });
+
+    it('equal trees', () => {
+        const tree = new BinarySearchTree(2);
+        tree.add(1);
+        tree.add(5);
+
+        const tree2 = new BinarySearchTree(2);
+        tree2.add(1);
+        tree2.add(5);
+
+        const eq = tree.equals(tree2);
+
+        expect(eq).toBeTrue();
+    });
 });
