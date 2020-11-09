@@ -1,4 +1,5 @@
 import { BinarySearchTree } from "../src/binary-search-tree";
+const { performance } = require('perf_hooks');
 
 describe('binary tree', () => {
     it('put values in binary tree', () => {
@@ -158,5 +159,20 @@ describe('binary tree', () => {
         const nodes = tree.nodesWithDistance(4);
 
         expect(nodes).toEqual([12, 52]);
+    });
+
+    it('async methods', async () => {
+        let i = 1;
+        function returnsPromise(a: number) {
+            return new Promise((res, rej) => {
+                setTimeout(() => {
+                    res(a + 1);
+                }, 10);
+            });
+        }
+        const t0 = performance.now();
+        await returnsPromise(i);
+        const t1 = performance.now();
+        expect(t1 - t0).toBeCloseTo(10, -0.5);
     });
 });
