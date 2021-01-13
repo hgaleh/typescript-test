@@ -1,3 +1,4 @@
+import { doesNotMatch } from 'assert';
 import { AsyncSubject, Subscriber } from 'rxjs';
 
 describe('async subject test', () => {
@@ -70,5 +71,18 @@ describe('async subject test', () => {
             count++;
             expect(count).toBe(3);
         });
+    });
+
+    it('if not complete there will be not resolution in subscribers', (done) => {
+        const sub = new AsyncSubject();
+        let count = 0;
+        sub.subscribe(val => {
+            count++;
+        });
+        sub.next(10);
+        setTimeout(() => {
+            expect(count).toBe(0);
+            done();
+        }, 10)
     });
 });
