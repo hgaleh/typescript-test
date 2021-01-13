@@ -85,4 +85,17 @@ describe('async subject test', () => {
             done();
         }, 10)
     });
+
+    it('complete without next', (done) => {
+        const sub = new AsyncSubject();
+        let count = 0;
+        sub.subscribe(() => {
+            count++;
+        });
+        sub.complete();
+        setTimeout(() => {
+            expect(count).toBe(0);
+            done();
+        }, 10);
+    });
 });
