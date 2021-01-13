@@ -1,5 +1,6 @@
-import { doesNotMatch } from 'assert';
 import { AsyncSubject, Subscriber } from 'rxjs';
+
+// saves last state before complete() and relays that to all observers
 
 describe('async subject test', () => {
     it('subscribers will receive last value after completion', () => {
