@@ -1,5 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 
+// saves the last state and subscriber receives the last state
+// has an initial value
+
 describe('behavior subject test', () => {
     it('behavior subject has initial value', (done) => {
         const sub = new BehaviorSubject(10);
