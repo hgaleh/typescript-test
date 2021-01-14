@@ -17,7 +17,7 @@ describe('use some to findout if any occurance occured', () => {
     it('use find instead', () => {
         const arrWithAli = [2, 4, 0, 'ali', true, 'ali'];
         const arrWithoutAli = [2, 4, 0, true, 'mohammad'];
-        expect(arrWithAli.find(el => el === 'ali')).toBeTrue();
-        expect(arrWithoutAli.find(el => el === 'ali')).toBeFalse();
+        expect(!!arrWithAli.find(el => el === 'ali')).toBeTrue();
+        expect(!!arrWithoutAli.find(el => el === 'ali')).toBeFalse();
     });
 });
